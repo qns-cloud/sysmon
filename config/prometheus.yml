@@ -10,14 +10,14 @@ scrape_configs:
     static_configs:
       - targets: ['10.192.172.254:161'] # Replace with your device IP
     params:
-      module: [if_mib]  # Use the module defined in snmp.yml
+      module: [default]  # Use the default module
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target
       - source_labels: [__param_target]
         target_label: instance
       - target_label: __address__
-        replacement: snmp-exporter:9116  # SNMP exporter address
+        replacement: snmp-exporter:9117  # SNMP exporter address
   
   - job_name: 'cadvisor'
     scrape_interval: 5s
