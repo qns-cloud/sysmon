@@ -1,6 +1,27 @@
 modules:
   if_mib:
-    walk: [ifXTable, ifTable]
+    walk:
+      - 1.3.6.1.2.1.31.1.1  # ifXTable
+      - 1.3.6.1.2.1.2.2     # ifTable
     version: 2
+    auth:
+      community: public
     retries: 3
     timeout: 5s
+    max_repetitions: 25
+    lookups:
+      - source_indexes: [ifIndex]
+        lookup: ifAlias
+      - source_indexes: [ifIndex]
+        lookup: ifDescr
+      - source_indexes: [ifIndex]
+        lookup: 1.3.6.1.2.1.31.1.1.1.1  # ifName
+    overrides:
+      ifAlias:
+        ignore: true
+      ifDescr:
+        ignore: true
+      ifName:
+        ignore: true
+      ifType:
+        type: EnumAsInfo
