@@ -90,7 +90,9 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.47.0
-    command: -logtostderr -docker_only --disable_metrics=nvml
+    command: -logtostderr -docker_only -disable_metrics=disk,diskIO,network,tcp,udp,percpu,sched,process,hugetlb,referenced_memory,cpu_topology,resctrl,cpuset,advtcp,memory_numa,cpu_numa,perf_event,hugetlb_numa
+    environment:
+      - IPMCTL_ENABLE=false
     deploy:
       mode: global
       resources:
