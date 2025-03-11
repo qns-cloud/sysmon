@@ -125,6 +125,7 @@ services:
 
   snmp-exporter:
     image: prom/snmp-exporter:v0.24.0
+    image: prom/snmp-exporter:v0.24.0
     ports:
       - target: 9116
         published: 9116
