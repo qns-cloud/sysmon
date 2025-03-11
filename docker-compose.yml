@@ -114,11 +114,16 @@ services:
       - net
 
   snmp-exporter:
-    build:
-      context: .
-      dockerfile: Dockerfile.snmp-exporter
+    image: prom/snmp-exporter:v0.24.0
     ports:
       - "9116:9116"
+    volumes:
+      - type: bind
+        source: /opt/Workspace/sysmon/config/snmp.yml
+        target: /etc/snmp_exporter/snmp.yml
+        read_only: true
+    command:
+      - '--config.file=/etc/snmp_exporter/snmp.yml'
     deploy:
       replicas: 1
       restart_policy:
