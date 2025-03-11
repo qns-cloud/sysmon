@@ -5,7 +5,7 @@ scrape_configs:
   - job_name: 'snmp'
     static_configs:
       - targets:
-        - '192.168.1.1' # Replace with your SNMP device IP
+        - '10.192.172.254' # Replace with your SNMP device IP
     metrics_path: /snmp
     params:
       module: [if_mib] # Modify based on the SNMP module
