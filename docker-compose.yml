@@ -126,15 +126,15 @@ services:
   snmp-exporter:
     image: prom/snmp-exporter:v0.24.0
 <<<<<<< HEAD
-    image: prom/snmp-exporter:v0.24.0
+    image: prom/snmp-exporter:v0.23.0
     ports:
-      - target: 9116
+      - target: 9117
         published: 9116
         protocol: tcp
         mode: ingress
 =======
     ports:
-      - "9116:9116"
+      - "9117:9116"
     volumes:
       - type: bind
         source: /opt/Workspace/sysmon/config/snmp.yml
