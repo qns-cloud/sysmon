@@ -15,7 +15,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-          - node.labels.monitoring == true
     volumes:
       - type: volume
         source: grafana-data
@@ -41,7 +40,6 @@ services:
       placement:
         constraints:
           - node.role == manager
-          - node.labels.monitoring == true
     volumes:
       - type: volume
         source: prometheus-data
