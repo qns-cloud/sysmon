@@ -1,0 +1,13 @@
+modules:
+  if_mib:
+    walk:
+      - sysUpTime
+      - sysName
+      - ifDescr
+      - ifAdminStatus
+      - ifOperStatus
+      - ifInOctets
+      - ifOutOctets
+    version: 2
+    auth:
+      community: public
