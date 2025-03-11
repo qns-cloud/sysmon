@@ -1,7 +1,0 @@
-FROM prom/snmp-exporter:v0.24.0
-
-COPY config/snmp.yml /etc/snmp_exporter/snmp.yml
-
-USER root
-RUN chmod 644 /etc/snmp_exporter/snmp.yml
-USER nobody
