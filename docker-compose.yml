@@ -125,12 +125,24 @@ services:
 
   snmp-exporter:
     image: prom/snmp-exporter:v0.24.0
+<<<<<<< HEAD
     image: prom/snmp-exporter:v0.24.0
     ports:
       - target: 9116
         published: 9116
         protocol: tcp
         mode: ingress
+=======
+    ports:
+      - "9116:9116"
+    volumes:
+      - type: bind
+        source: /opt/Workspace/sysmon/config/snmp.yml
+        target: /etc/snmp_exporter/snmp.yml
+        read_only: true
+    command:
+      - '--config.file=/etc/snmp_exporter/snmp.yml'
+>>>>>>> parent of 99e5fd5 (Trial 6)
     deploy:
       replicas: 1
       restart_policy:
