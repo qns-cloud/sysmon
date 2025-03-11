@@ -29,21 +29,15 @@ services:
 
   prometheus:
     image: portainer/template-swarm-monitoring:prometheus-v2.44.0
-    ports:
-      - target: 9090
-        published: 9090
-        protocol: tcp
-        mode: ingress
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--log.level=error'
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention.time=7d'
-      - '--web.enable-lifecycle'
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: on-failure
       placement:
         constraints:
           - node.role == manager
@@ -52,10 +46,6 @@ services:
       - type: volume
         source: prometheus-data
         target: /prometheus
-      - type: bind
-        source: /opt/Workspace/sysmon/config/prometheus.yml
-        target: /etc/prometheus/prometheus.yml
-        read_only: true
     networks:
       - net
 
@@ -127,31 +117,14 @@ services:
     image: prom/snmp-exporter:v0.23.0
     ports:
       - "9117:9116"
-    volumes:
-      - type: bind
-        source: /opt/Workspace/sysmon/config/snmp.yml
-        target: /etc/snmp_exporter/snmp.yml
-        read_only: true
-    command:
-      - '--config.file=/etc/snmp_exporter/snmp.yml'
     deploy:
       replicas: 1
       restart_policy:
-        condition: any
+        condition: on-failure
       placement:
         constraints:
           - node.role == manager
           - node.labels.monitoring == true
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9116/metrics"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
     networks:
       - net
 
