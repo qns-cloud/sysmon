@@ -113,6 +113,23 @@ services:
     networks:
       - net
 
+  snmp-exporter:
+    image: prom/snmp-exporter:v0.24.0
+    ports:
+      - "9116:9116"
+    volumes:
+      - ./config/snmp.yml:/etc/snmp_exporter/snmp.yml
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.monitoring == true
+    networks:
+      - net
+
 volumes:
   grafana-data:
   prometheus-data:
